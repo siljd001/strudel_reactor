@@ -1,4 +1,4 @@
-export function FindHushers(code) {
+export function FindBeats(code) {
   // Match lines like: bassline:, main_arp:, drums:, etc.
   // The regex captures the name before the colon.
   // It also captures the match's index.

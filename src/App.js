@@ -137,7 +137,7 @@ export default function StrudelDemo() {
               <DJLivePlayer />
             </div>
             <div className="col-md-4">
-              <DJHushers ProcAndPlay={ProcAndPlay} />
+              <DJHushers ProcAndPlay={ProcAndPlay} stranger_tune={stranger_tune} />
             </div>
           </div>
         </div>
