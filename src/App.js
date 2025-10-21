@@ -15,6 +15,7 @@ import { stranger_tune } from "./tunes";
 import console_monkey_patch, { getD3Data } from "./console-monkey-patch";
 import Header from "./components/header/Header";
 import MusicInput from "./components/preprocess/MusicInput";
+import MusicProcessor from "./components/preprocess/MusicProcessor";
 let globalEditor = null;
 
 const handleD3Data = (event) => {
@@ -122,12 +123,7 @@ export default function StrudelDemo() {
             </div>
             <div className="col-md-4">
               <nav>
-                <button id="process" className="btn btn-outline-primary">
-                  Preprocess
-                </button>
-                <button id="process_play" className="btn btn-outline-primary">
-                  Proc & Play
-                </button>
+                <MusicProcessor />
                 <br />
                 <button id="play" className="btn btn-outline-primary">
                   Play
