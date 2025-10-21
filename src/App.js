@@ -9,7 +9,7 @@ import { getAudioContext, webaudioOutput, registerSynthSounds } from '@strudel/w
 import { registerSoundfonts } from '@strudel/soundfonts';
 import { stranger_tune } from './tunes';
 import console_monkey_patch, { getD3Data } from './console-monkey-patch';
-
+import Header  from './components/header/Header';
 let globalEditor = null;
 
 const handleD3Data = (event) => {
@@ -108,7 +108,7 @@ useEffect(() => {
 
 return (
     <div>
-        <h2>Strudel Demo</h2>
+        <Header />
         <main>
 
             <div className="container-fluid">
