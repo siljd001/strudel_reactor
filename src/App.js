@@ -17,6 +17,7 @@ import Header from "./components/header/Header";
 import MusicInput from "./components/preprocess/MusicInput";
 import MusicProcessor from "./components/preprocess/MusicProcessor";
 import MusicPlayer from "./components/preprocess/MusicPlayer";
+import DJLivePlayer from "./components/strudel_control/DJLivePlayer";
 let globalEditor = null;
 
 const handleD3Data = (event) => {
@@ -134,8 +135,7 @@ export default function StrudelDemo() {
               className="col-md-8"
               style={{ maxHeight: "50vh", overflowY: "auto" }}
             >
-              <div id="editor" />
-              <div id="output" />
+              <DJLivePlayer />
             </div>
             <div className="col-md-4">
               <div className="form-check">
