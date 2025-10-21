@@ -18,6 +18,7 @@ import MusicInput from "./components/preprocess/MusicInput";
 import MusicProcessor from "./components/preprocess/MusicProcessor";
 import MusicPlayer from "./components/preprocess/MusicPlayer";
 import DJLivePlayer from "./components/strudel_control/DJLivePlayer";
+import DJHushers from "./components/strudel_control/DJHushers";
 let globalEditor = null;
 
 const handleD3Data = (event) => {
@@ -118,9 +119,7 @@ export default function StrudelDemo() {
       <main>
         <div className="container-fluid">
           <div className="row">
-            <div
-              className="col-md-8"
-            >
+            <div className="col-md-8">
               <MusicInput />
             </div>
             <div className="col-md-4">
@@ -138,31 +137,7 @@ export default function StrudelDemo() {
               <DJLivePlayer />
             </div>
             <div className="col-md-4">
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="radio"
-                  name="flexRadioDefault"
-                  id="flexRadioDefault1"
-                  onChange={ProcAndPlay}
-                  defaultChecked
-                />
-                <label className="form-check-label" htmlFor="flexRadioDefault1">
-                  p1: ON
-                </label>
-              </div>
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="radio"
-                  name="flexRadioDefault"
-                  id="flexRadioDefault2"
-                  onChange={ProcAndPlay}
-                />
-                <label className="form-check-label" htmlFor="flexRadioDefault2">
-                  p1: HUSH
-                </label>
-              </div>
+              <DJHushers ProcAndPlay={ProcAndPlay} />
             </div>
           </div>
         </div>
