@@ -53,19 +53,17 @@ export function ProcAndPlay() {
 
 export function Proc() {
   let proc_text = document.getElementById("proc").value;
-  let proc_text_replaced = proc_text.replaceAll("<p1_Radio>", ProcessText);
-  ProcessText(proc_text);
-  globalEditor.setCode(proc_text_replaced);
+  globalEditor.setCode(proc_text);
 }
 
-export function ProcessText(match, ...args) {
-  let replace = "";
-  if (document.getElementById("flexRadioDefault2").checked) {
-    replace = "_";
-  }
+// export function ProcessText(match, ...args) {
+//   let replace = "";
+//   if (document.getElementById("flexRadioDefault2").checked) {
+//     replace = "_";
+//   }
 
-  return replace;
-}
+//   return replace;
+// }
 
 export default function StrudelDemo() {
   const hasRun = useRef(false);
@@ -137,7 +135,10 @@ export default function StrudelDemo() {
               <DJLivePlayer />
             </div>
             <div className="col-md-4">
-              <DJHushers ProcAndPlay={ProcAndPlay} stranger_tune={stranger_tune} />
+              <DJHushers
+                ProcAndPlay={ProcAndPlay}
+                stranger_tune={stranger_tune}
+              />
             </div>
           </div>
         </div>
