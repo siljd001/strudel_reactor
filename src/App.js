@@ -16,6 +16,7 @@ import console_monkey_patch, { getD3Data } from "./console-monkey-patch";
 import Header from "./components/header/Header";
 import MusicInput from "./components/preprocess/MusicInput";
 import MusicProcessor from "./components/preprocess/MusicProcessor";
+import MusicPlayer from "./components/preprocess/MusicPlayer";
 let globalEditor = null;
 
 const handleD3Data = (event) => {
@@ -124,13 +125,7 @@ export default function StrudelDemo() {
             <div className="col-md-4">
               <nav>
                 <MusicProcessor />
-                <br />
-                <button id="play" className="btn btn-outline-primary">
-                  Play
-                </button>
-                <button id="stop" className="btn btn-outline-primary">
-                  Stop
-                </button>
+                <MusicPlayer />
               </nav>
             </div>
           </div>
