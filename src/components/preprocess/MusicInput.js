@@ -1,4 +1,4 @@
-export default function MusicInput() {
+export default function MusicInput({ musicInput, setMusicInput }) {
   return (
     <>
       <label
@@ -11,6 +11,10 @@ export default function MusicInput() {
         className="form-control"
         rows="15"
         id="proc"
+        value={musicInput}
+        onChange={(e) => {
+          setMusicInput(e.target.value);
+        }}
         style={{ maxHeight: "50vh", overflowY: "auto" }}
       ></textarea>
     </>

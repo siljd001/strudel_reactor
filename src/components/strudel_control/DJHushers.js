@@ -1,21 +1,54 @@
-import { FindBeats } from "../helper/FindBeats";
-import { useState } from "react";
+import { FindBeats, HushBeats } from "../helper/BeatsHelper";
+import { useEffect, useState } from "react";
+import MusicInput from "../preprocess/MusicInput";
 
-export default function DJHushers({ ProcAndPlay, stranger_tune }) {
-  const beats = FindBeats(stranger_tune);
+export default function DJHushers({ ProcAndPlay, musicInput, setMusicInput }) {
+  const [beats, setBeats] = useState(FindBeats(musicInput));
+  // Always keep beats updated with musicInput changes
+  useEffect(() => setBeats(FindBeats(musicInput)), [musicInput]);
   const [beatsPlaying, setBeatsPlaying] = useState(beats.map((_) => true));
-  console.log(beatsPlaying);
+  console.log(beats);
+  console.log(beats[0].name.length);
   return (
     <>
       <h5 className="fw-bold text-secondary">Music Control</h5>
       {beats &&
-        Object.entries(beats).map(([index, beat], currentIndex) => (
+        // Map through each beat and create a button to toggle its playing state
+        Object.entries(beats).map(([currentIndex, { name, index }]) => (
           <div key={index} className="d-flex align-items-center gap-2 mb-2">
-            <button className={`btn btn-outline-${beatsPlaying[currentIndex] ? "primary" : "secondary"} me-2 mb-2 p-2 d-flex gap-2 align-items-center`} onClick={() => {
-              let newBeatsPlaying = [...beatsPlaying];
-              newBeatsPlaying[currentIndex] = !newBeatsPlaying[currentIndex];
-              setBeatsPlaying(newBeatsPlaying);
-            }}>
+            <button
+              className={`btn btn-outline-${
+                beatsPlaying[currentIndex] ? "primary" : "secondary"
+              } me-2 mb-2 p-2 d-flex gap-2 align-items-center`}
+              onClick={() => {
+                // Recompute beats synchronously and use the fresh value locally to avoid relying on stale state
+                const newBeats = FindBeats(musicInput);
+                setBeats(newBeats);
+
+                let updatedName = newBeats[currentIndex].name;
+                let updatedIndex = newBeats[currentIndex].index;
+
+                // Toggle beat playing state using numeric index
+                let newBeatsPlaying = [...beatsPlaying];
+                newBeatsPlaying[currentIndex] = !newBeatsPlaying[currentIndex];
+                setBeatsPlaying(newBeatsPlaying);
+
+                console.log(
+                  updatedIndex,
+                  musicInput[updatedIndex],
+                  updatedName,
+                  currentIndex
+                );
+
+                let stranger_code_hushed_beat = HushBeats(
+                  musicInput,
+                  updatedIndex
+                );
+
+                setMusicInput(stranger_code_hushed_beat);
+                ProcAndPlay();
+              }}
+            >
               {beatsPlaying[currentIndex] ? (
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -52,7 +85,7 @@ export default function DJHushers({ ProcAndPlay, stranger_tune }) {
                 </svg>
               )}
             </button>
-            <span>{beat.name}</span>
+            <span>{name}</span>
           </div>
         ))}
       {/* <div className="form-check">

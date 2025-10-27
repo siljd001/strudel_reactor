@@ -1,5 +1,5 @@
 import "./App.css";
-import { useEffect, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { StrudelMirror } from "@strudel/codemirror";
 import { evalScope } from "@strudel/core";
 import { drawPianoroll } from "@strudel/draw";
@@ -13,13 +13,15 @@ import {
 import { registerSoundfonts } from "@strudel/soundfonts";
 import { stranger_tune } from "./tunes";
 import console_monkey_patch, { getD3Data } from "./console-monkey-patch";
+
+// Components
+import { ProcAndPlay, Proc, globalEditor } from "./Processors";
 import Header from "./components/header/Header";
 import MusicInput from "./components/preprocess/MusicInput";
 import MusicProcessor from "./components/preprocess/MusicProcessor";
 import MusicPlayer from "./components/preprocess/MusicPlayer";
 import DJLivePlayer from "./components/strudel_control/DJLivePlayer";
 import DJHushers from "./components/strudel_control/DJHushers";
-let globalEditor = null;
 
 const handleD3Data = (event) => {
   console.log(event.detail);
@@ -43,31 +45,10 @@ export function SetupButtons() {
   });
 }
 
-export function ProcAndPlay() {
-  if (globalEditor != null && globalEditor.repl.state.started == true) {
-    console.log(globalEditor);
-    Proc();
-    globalEditor.evaluate();
-  }
-}
-
-export function Proc() {
-  let proc_text = document.getElementById("proc").value;
-  globalEditor.setCode(proc_text);
-}
-
-// export function ProcessText(match, ...args) {
-//   let replace = "";
-//   if (document.getElementById("flexRadioDefault2").checked) {
-//     replace = "_";
-//   }
-
-//   return replace;
-// }
 
 export default function StrudelDemo() {
   const hasRun = useRef(false);
-
+  const [musicInput, setMusicInput] = useState(stranger_tune);
   useEffect(() => {
     if (!hasRun.current) {
       document.addEventListener("d3Data", handleD3Data);
@@ -118,7 +99,10 @@ export default function StrudelDemo() {
         <div className="container-fluid">
           <div className="row">
             <div className="col-md-8">
-              <MusicInput />
+              <MusicInput
+                musicInput={musicInput}
+                setMusicInput={setMusicInput}
+              />
             </div>
             <div className="col-md-4">
               <nav>
@@ -135,10 +119,7 @@ export default function StrudelDemo() {
               <DJLivePlayer />
             </div>
             <div className="col-md-4">
-              <DJHushers
-                ProcAndPlay={ProcAndPlay}
-                stranger_tune={stranger_tune}
-              />
+              <DJHushers ProcAndPlay={ProcAndPlay} musicInput={musicInput} setMusicInput={setMusicInput} />
             </div>
           </div>
         </div>
