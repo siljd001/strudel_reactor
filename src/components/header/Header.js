@@ -1,5 +1,5 @@
 import IntroModal from "./IntroModal";
-export default function Header() {
+export default function Header({ theme, setTheme }) {
   return (
     <>
       <IntroModal />
@@ -35,7 +35,14 @@ export default function Header() {
             </button>
           </li>
           <li>
-            <button className="btn btn-outline-primary d-flex align-items-center gap-2">
+            <button
+              className={`btn btn-outline-${
+                theme === "Light" ? "primary" : "secondary"
+              } d-flex align-items-center gap-2`}
+              onClick={() =>
+                setTheme((prev) => (prev === "Light" ? "Dark" : "Light"))
+              }
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -54,7 +61,7 @@ export default function Header() {
                 <path d="m19 5-1.256 1.256" />
                 <path d="M20 12h2" />
               </svg>
-              <span>Light Mode</span>
+              <span>{theme} Mode</span>
             </button>
           </li>
         </ul>

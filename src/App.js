@@ -1,5 +1,5 @@
 import "./App.css";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, use } from "react";
 import { StrudelMirror } from "@strudel/codemirror";
 import { evalScope } from "@strudel/core";
 import { drawPianoroll } from "@strudel/draw";
@@ -35,6 +35,7 @@ const handleD3Data = (event) => {
 export default function StrudelDemo() {
   const hasRun = useRef(false);
   const [musicInput, setMusicInput] = useState(stranger_tune);
+  const [theme, setTheme] = useState("Light");
   useEffect(() => {
     if (!hasRun.current) {
       document.addEventListener("d3Data", handleD3Data);
@@ -77,9 +78,14 @@ export default function StrudelDemo() {
     }
   }, [musicInput]);
 
+  // Light/Dark Theme Effect
+  useEffect(() => {
+    document.documentElement.setAttribute("data-bs-theme", theme.toLowerCase());
+  }, [theme]);
+
   return (
     <div>
-      <Header />
+      <Header theme={theme} setTheme={setTheme} />
       <main>
         <div className="container-fluid">
           <div className="row">
@@ -91,7 +97,11 @@ export default function StrudelDemo() {
             </div>
             <div className="col-md-4">
               <nav>
-                <MusicProcessor musicInput={musicInput} Proc={Proc} ProcAndPlay={ProcAndPlay} />
+                <MusicProcessor
+                  musicInput={musicInput}
+                  Proc={Proc}
+                  ProcAndPlay={ProcAndPlay}
+                />
                 <MusicPlayer getGlobalEditor={getGlobalEditor} />
               </nav>
             </div>
