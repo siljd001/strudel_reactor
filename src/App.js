@@ -98,6 +98,7 @@ export default function StrudelDemo() {
             <div className="col-md-4">
               <nav>
                 <MusicProcessor
+                  setMusicInput={setMusicInput}
                   musicInput={musicInput}
                   Proc={Proc}
                   ProcAndPlay={ProcAndPlay}
