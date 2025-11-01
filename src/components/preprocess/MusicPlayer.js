@@ -1,8 +1,9 @@
-export default function MusicPlayer() {
+export default function MusicPlayer({getGlobalEditor}) {
   return (
     <div className="d-flex gap-2 mt-3">
       <button
         id="play"
+        onClick={() => getGlobalEditor().evaluate()}
         className="btn btn-outline-primary w-100 fw-bold d-flex gap-2 justify-content-center align-items-center"
       >
         <svg
@@ -23,6 +24,7 @@ export default function MusicPlayer() {
       </button>
       <button
         id="stop"
+        onClick={() => getGlobalEditor().stop()}
         className="btn btn-outline-danger w-100 fw-bold d-flex gap-2 justify-content-center align-items-center"
       >
         <svg

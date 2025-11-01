@@ -1,10 +1,11 @@
-export default function MusicProcessor() {
+export default function MusicProcessor({Proc, ProcAndPlay, musicInput}) {
   return (
     <div className="music-processor">
       <h5 className="fw-bold text-secondary">Music Processor</h5>
       <div className="d-flex w-100 gap-2">
         <button
           id="process"
+          onClick={() => Proc(musicInput)}
           className="btn btn-outline-secondary d-flex w-100 flex-column align-items-start p-3 text-start"
         >
           <div className="d-flex gap-2 w-100 justify-content-between align-items-start mb-1">
@@ -46,6 +47,7 @@ export default function MusicProcessor() {
         </button>
         <button
           id="process_play"
+          onClick={() => ProcAndPlay(musicInput)}
           className="btn btn-outline-secondary d-flex w-100 flex-column align-items-start p-3 text-start"
         >
           <div className="d-flex gap-2 w-100 justify-content-between align-items-start mb-1">

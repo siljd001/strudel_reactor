@@ -28,29 +28,9 @@ import MusicPlayer from "./components/preprocess/MusicPlayer";
 import DJLivePlayer from "./components/strudel_control/DJLivePlayer";
 import DJHushers from "./components/strudel_control/DJHushers";
 
-// Global editor variable
-
 const handleD3Data = (event) => {
   console.log(event.detail);
 };
-
-export function SetupButtons() {
-  document
-    .getElementById("play")
-    .addEventListener("click", () => getGlobalEditor().evaluate());
-  document
-    .getElementById("stop")
-    .addEventListener("click", () => getGlobalEditor().stop());
-  document.getElementById("process").addEventListener("click", () => {
-    Proc();
-  });
-  document.getElementById("process_play").addEventListener("click", () => {
-    if (getGlobalEditor() != null) {
-      Proc();
-      getGlobalEditor().evaluate();
-    }
-  });
-}
 
 export default function StrudelDemo() {
   const hasRun = useRef(false);
@@ -93,12 +73,9 @@ export default function StrudelDemo() {
           },
         })
       );
-
-      document.getElementById("proc").value = stranger_tune;
-      SetupButtons();
-      Proc();
+      Proc(musicInput);
     }
-  }, []);
+  }, [musicInput]);
 
   return (
     <div>
@@ -114,8 +91,8 @@ export default function StrudelDemo() {
             </div>
             <div className="col-md-4">
               <nav>
-                <MusicProcessor />
-                <MusicPlayer />
+                <MusicProcessor musicInput={musicInput} Proc={Proc} ProcAndPlay={ProcAndPlay} />
+                <MusicPlayer getGlobalEditor={getGlobalEditor} />
               </nav>
             </div>
           </div>
