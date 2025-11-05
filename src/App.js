@@ -1,5 +1,4 @@
-import "./App.css";
-import { useEffect, useState, useRef, use } from "react";
+import { useEffect, useState, useRef } from "react";
 import { StrudelMirror } from "@strudel/codemirror";
 import { evalScope } from "@strudel/core";
 import { drawPianoroll } from "@strudel/draw";
@@ -12,6 +11,7 @@ import {
 } from "@strudel/webaudio";
 import { registerSoundfonts } from "@strudel/soundfonts";
 import { stranger_tune } from "./tunes";
+// eslint-disable-next-line no-unused-vars
 import console_monkey_patch, { getD3Data } from "./console-monkey-patch";
 
 // Components
