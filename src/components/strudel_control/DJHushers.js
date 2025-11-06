@@ -91,6 +91,10 @@ export default function DJHushers({ ProcAndPlay, musicInput, setMusicInput }) {
               )}
             </button>
             <span>{name}</span>
+            <div className="volume-controller d-flex gap-1 ms-auto">
+              <button className="btn btn-outline-danger">-</button>
+              <button className="btn btn-outline-primary">+</button>
+            </div>
           </div>
         ))}
     </>
