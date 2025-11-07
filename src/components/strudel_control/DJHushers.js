@@ -1,4 +1,4 @@
-import { FindBeats, HushBeats } from "../helper/BeatsHelper";
+import { FindBeats, HushBeats, volumeController } from "../helper/BeatsHelper";
 import { getGlobalEditor } from "../../Processors";
 import { useEffect, useState } from "react";
 
@@ -6,7 +6,14 @@ export default function DJHushers({ ProcAndPlay, musicInput, setMusicInput }) {
   const [beats, setBeats] = useState(FindBeats(musicInput));
   // Always keep beats updated with musicInput changes
   useEffect(() => setBeats(FindBeats(musicInput)), [musicInput]);
-  const [beatsPlaying, setBeatsPlaying] = useState(beats.map((_) => true));
+  const [beatsPlaying, setBeatsPlaying] = useState(
+    beats.map((_) => [
+      // is beat playing?
+      true,
+      // volume of the beat: defaults to 0.75
+      0.75,
+    ])
+  );
   console.log(beats);
   console.log(beats[0].name.length);
   return (
@@ -18,7 +25,7 @@ export default function DJHushers({ ProcAndPlay, musicInput, setMusicInput }) {
           <div key={index} className="d-flex align-items-center gap-2 mb-2">
             <button
               className={`btn btn-outline-${
-                beatsPlaying[currentIndex] ? "primary" : "secondary"
+                beatsPlaying[currentIndex][0] ? "primary" : "secondary"
               } me-2 mb-2 p-2 d-flex gap-2 align-items-center`}
               onClick={() => {
                 // Recompute beats synchronously and use the fresh value locally to avoid relying on stale state
@@ -30,7 +37,8 @@ export default function DJHushers({ ProcAndPlay, musicInput, setMusicInput }) {
 
                 // Toggle beat playing state using numeric index
                 let newBeatsPlaying = [...beatsPlaying];
-                newBeatsPlaying[currentIndex] = !newBeatsPlaying[currentIndex];
+                newBeatsPlaying[currentIndex][0] =
+                  !newBeatsPlaying[currentIndex][0];
                 setBeatsPlaying(newBeatsPlaying);
 
                 console.log(
@@ -54,7 +62,7 @@ export default function DJHushers({ ProcAndPlay, musicInput, setMusicInput }) {
                 }
               }}
             >
-              {beatsPlaying[currentIndex] ? (
+              {beatsPlaying[currentIndex][0] ? (
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -92,8 +100,57 @@ export default function DJHushers({ ProcAndPlay, musicInput, setMusicInput }) {
             </button>
             <span>{name}</span>
             <div className="volume-controller d-flex gap-1 ms-auto">
-              <button className="btn btn-outline-danger">-</button>
-              <button className="btn btn-outline-primary">+</button>
+              <button
+                className="btn btn-outline-danger"
+                onClick={async () => {
+                  const newVolume = Math.max(
+                    0,
+                    beatsPlaying[currentIndex][1] - 0.25
+                  );
+                  await setBeatsPlaying((prev) => {
+                    const newBeatsPlaying = [...prev];
+                    newBeatsPlaying[currentIndex][1] = newVolume;
+                    console.log(newBeatsPlaying[currentIndex][1]);
+
+                    return newBeatsPlaying;
+                  });
+                  let StrudelVolumeUpdatedCode = await volumeController(
+                    musicInput,
+                    name,
+                    beatsPlaying[currentIndex][1]
+                  );
+                  
+                  setMusicInput(StrudelVolumeUpdatedCode);
+                  ProcAndPlay(StrudelVolumeUpdatedCode);
+                }}
+              >
+                -
+              </button>
+              <button
+                className="btn btn-outline-primary"
+                onClick={async () => {
+                  const newVolume = Math.min(
+                    1.0,
+                    beatsPlaying[currentIndex][1] + 0.25
+                  );
+                  await setBeatsPlaying((prev) => {
+                    const newBeatsPlaying = [...prev];
+                    newBeatsPlaying[currentIndex][1] = newVolume;
+                    return newBeatsPlaying;
+                  });
+                  console.log(beatsPlaying[currentIndex][1]);
+
+                  let StrudelVolumeUpdatedCode = await volumeController(
+                    musicInput,
+                    name,
+                    beatsPlaying[currentIndex][1]
+                  );
+                  setMusicInput(StrudelVolumeUpdatedCode);
+                  ProcAndPlay(StrudelVolumeUpdatedCode);
+                }}
+              >
+                +
+              </button>
             </div>
           </div>
         ))}

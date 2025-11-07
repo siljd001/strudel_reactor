@@ -12,11 +12,11 @@ export function FindBeats(code) {
     const nameStartIndex = fullMatchStart + nameOffset;
 
     // Strip leading underscores for clean name
-    const cleanName = rawName.replace(/^_+/, '');
+    const cleanName = rawName.replace(/^_+/, "");
 
     return {
       name: cleanName,
-      index: nameStartIndex
+      index: nameStartIndex,
     };
   });
 }
@@ -50,4 +50,26 @@ export function HushBeats(code, targetIndex) {
   }
 
   return codeArray.join("");
+}
+
+export function volumeController(strudelCode, blockName, gainValue = 0.75) {
+  const blockRegex = new RegExp(
+    `${blockName}:\\s*([\\s\\S]*?)(?=\\n\\w+:|$)`,
+    "g"
+  );
+
+  return strudelCode.replace(blockRegex, (blockMatch) => {
+    const gainRegex = /\.gain\(([^)]+)\)/;
+
+    if (gainRegex.test(blockMatch)) {
+      // Replace existing gain value
+      return blockMatch.replace(gainRegex, `.gain(${gainValue})`);
+    } else {
+      // Inject gain after the last method call (before the final newline)
+      const lines = blockMatch.trimEnd().split("\n");
+      const lastLine = lines.pop();
+      const updatedLastLine = lastLine.trimEnd() + `.gain(${gainValue})`;
+      return lines.concat(updatedLastLine).join("\n");
+    }
+  });
 }
