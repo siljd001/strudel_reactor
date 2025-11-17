@@ -10,5 +10,17 @@ Are you ready to dive into the world of Strudel Reactor? This is your gateway to
 Get ready to unleash your creativity, explore new sonic landscapes, and bring your musical ideas to life. Let's embark on this exciting journey together!
 
 ## 🔥 Key Features
+
 1. Intro Modal Button shows an introduction of Strudel Reactor
 2. Light/Dark Theme to suit the vibes in your music environment
+3. Mute or Change Volume of each music!
+4. Added D3 Graph to show Bassline Timings!!
+
+## 🔖 Resources
+1. Lucida.dev - For SVG icons
+2. Prettier VSCode Extension - For beatiful code formatting
+3. Boostrap - For quick styling
+4. RegEx Generators to get these three regex:
+   1. Match lines like: bassline:, main_arp:, drums:, etc. `/^\s*([_]*[a-zA-Z_][a-zA-Z0-9_]*)\s*:/gm`
+   2. Regex to find the beat by its name `${blockName}:\\s*([\\s\\S]*?)(?=\\n\\w+:|$)`
+   3. finds gain(...) in the block  `/\.gain\(([^)]+)\)/`

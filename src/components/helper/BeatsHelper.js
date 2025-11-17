@@ -33,7 +33,7 @@ export function HushBeats(code, targetIndex) {
     const nameStartIndex = fullMatchStart + nameOffset;
 
     if (nameStartIndex === targetIndex) {
-      // Count how many underscores are already there
+      // count how many underscores are already there
       const underscoreMatch = rawName.match(/^_+/);
       const underscoreCount = underscoreMatch ? underscoreMatch[0].length : 0;
 
@@ -53,12 +53,14 @@ export function HushBeats(code, targetIndex) {
 }
 
 export function volumeController(strudelCode, blockName, gainValue = 0.75) {
+  // Regex to find the block by its name
   const blockRegex = new RegExp(
     `${blockName}:\\s*([\\s\\S]*?)(?=\\n\\w+:|$)`,
     "g"
   );
 
   return strudelCode.replace(blockRegex, (blockMatch) => {
+    // finds gain(...) in the block
     const gainRegex = /\.gain\(([^)]+)\)/;
 
     if (gainRegex.test(blockMatch)) {

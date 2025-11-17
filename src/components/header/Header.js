@@ -4,7 +4,7 @@ export default function Header({ theme, setTheme }) {
     <>
       <IntroModal />
       <header className="d-flex justify-content-between align-items-center p-3 mb-4 border-bottom">
-        <h2>Strudel Demo</h2>
+        <h2>Strudel Musix</h2>
         <ul className="list-unstyled d-flex gap-3 mb-0">
           <li>
             <button
