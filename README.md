@@ -9,6 +9,9 @@ Are you ready to dive into the world of Strudel Reactor? This is your gateway to
 
 Get ready to unleash your creativity, explore new sonic landscapes, and bring your musical ideas to life. Let's embark on this exciting journey together!
 
+## Demonstration Video
+Made using Canva: https://www.canva.com/design/DAG4-kPd1Dc/YJt3SDLpuZ5YPXoEpMRbEw/edit?utm_content=DAG4-kPd1Dc&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
+
 ## 🔥 Key Features
 
 1. Intro Modal Button shows an introduction of Strudel Reactor
